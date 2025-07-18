@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         
         # 搜索框
         self.search_box = QLineEdit()
-        self.search_box.setPlaceholderText("搜索方法...")
+        self.search_box.setPlaceholderText("搜索Akshare方法...")
         self.search_box.textChanged.connect(self.filter_methods)
         layout.addWidget(self.search_box)
         
