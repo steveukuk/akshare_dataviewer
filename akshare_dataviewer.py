@@ -1,5 +1,4 @@
 import akshare as ak
-import logging
 from datetime import datetime
 import pandas as pd
 import sys
@@ -44,39 +43,10 @@ class ToolTipWindow(QLabel):
         self.show()
         self.timer.start(timeout)
 
-def setup_logging():
-    """配置日志记录"""
-    try:
-        log_dir = "logs"
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        
-        today = datetime.now().strftime("%Y-%m-%d")
-        log_file = os.path.join(log_dir, f"akshare_{today}.log")
-        
-        # 检查日志文件是否可写
-        try:
-            with open(log_file, 'a', encoding='utf-8') as f:
-                f.write(f"\n{'='*20} 新的会话 {'='*20}\n")
-        except Exception as e:
-            raise Exception(f"无法写入日志文件: {log_file}, 错误: {str(e)}")
-        
-        logging.basicConfig(
-            level=logging.DEBUG,
-            format='%(asctime)s - %(levelname)s - %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S',
-            filename=log_file,
-            encoding='utf-8'
-        )
-        logging.info("日志系统初始化成功")
-    except Exception as e:
-        print(f"无法初始化日志系统: {str(e)}")
-        raise
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        setup_logging()
+        self.tooltip = ToolTipWindow(self)
         self.initUI()
     
     def initUI(self):
@@ -188,6 +158,17 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(panel)
         layout.setAlignment(Qt.AlignTop)
         
+        # 创建参数容器布局
+        self.param_container = QVBoxLayout()
+        layout.addLayout(self.param_container)   
+         
+        return panel
+    
+    def create_bottom_panel(self) -> QWidget:
+        """创建底部面板(结果显示)"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        
         # 按钮布局
         btn_layout = QHBoxLayout()
         btn_layout.setAlignment(Qt.AlignLeft)
@@ -206,14 +187,6 @@ class MainWindow(QMainWindow):
         
         layout.addLayout(btn_layout)
         layout.setAlignment(btn_layout, Qt.AlignLeft|Qt.AlignBottom)
-        
-        return panel
-    
-    def create_bottom_panel(self) -> QWidget:
-        """创建底部面板(结果显示)"""
-        panel = QWidget()
-        layout = QVBoxLayout(panel)
-        
         # 文本显示区域
         self.text_edit = QTextEdit()
         layout.addWidget(self.text_edit)
@@ -256,7 +229,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             error_msg = f"加载Excel文件失败: {str(e)}"
             self.text_edit.append(error_msg)
-            logging.error(error_msg)
             QMessageBox.critical(self, "错误", error_msg)
             
     def filter_methods(self, text=None):
@@ -318,9 +290,13 @@ class MainWindow(QMainWindow):
         # 清除顶部面板内容(保留解释文本编辑区)
         self.clear_layout(self.top_panel.layout(), [self.explanation_edit])
         
-        # 清除中部面板内容(保留请求按钮和保存按钮)
+        # 清除中部面板内容(保留请求按钮、保存按钮和参数容器)
         middle_layout = self.middle_panel.layout()
-        self.clear_layout(middle_layout, [self.request_btn, self.save_btn])
+        self.clear_layout(middle_layout, [self.request_btn, self.save_btn, self.param_container])
+        
+        # 重新添加参数容器到布局
+        if not middle_layout.indexOf(self.param_container) >= 0:
+            middle_layout.insertLayout(0, self.param_container)
         
         # 获取方法信息
         method_name = list_item.text()
@@ -353,7 +329,7 @@ class MainWindow(QMainWindow):
                 hbox.addWidget(label, 0)
                 hbox.addWidget(input_box, 1)
                 
-                middle_layout.addLayout(hbox)
+                self.param_container.addLayout(hbox)
 
     def show_tooltip(self, item):
         """显示工具提示"""
@@ -410,7 +386,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             error_msg = f"加载菜单配置失败: {str(e)}"
             QMessageBox.critical(self, "错误", error_msg)
-            logging.error(f"{error_msg}\n{traceback.format_exc()}")
             return False
 
     def createMenuBar(self):
@@ -427,6 +402,19 @@ class MainWindow(QMainWindow):
 
         # 操作菜单
         operation_menu = menubar.addMenu('操作(&O)')
+
+        # 配置菜单
+        config_menu = menubar.addMenu('配置(&C)')
+        
+        # Akshare方法配置
+        method_config_action = QAction('Akshare方法配置', self)
+        method_config_action.triggered.connect(lambda: self.open_config_file('config/akshare_method_doc.xlsx'))
+        config_menu.addAction(method_config_action)
+        
+        # 操作菜单配置
+        menu_config_action = QAction('操作菜单配置', self)
+        menu_config_action.triggered.connect(lambda: self.open_config_file('config/operation_menu.xlsx'))
+        config_menu.addAction(menu_config_action)
         
         # 从配置加载菜单项
         if not hasattr(self, 'menu_config'):
@@ -488,7 +476,6 @@ class MainWindow(QMainWindow):
                     df = method()
                 except Exception as e:
                     error_msg = f"执行AKShare方法失败: {method_str}\n错误详情: {str(e)}"
-                    logging.error(f"{error_msg}\n{traceback.format_exc()}")
                     QMessageBox.critical(self, "方法执行错误",
                         f"执行方法时出错:\n{method_str}\n\n错误原因:\n{str(e)}")
                     continue
@@ -513,7 +500,6 @@ class MainWindow(QMainWindow):
                 
             except Exception as e:
                 error_msg = f"获取{level2}数据失败: {str(e)}"
-                logging.error(f"{error_msg}\n{traceback.format_exc()}")
                 raise Exception(error_msg)
                 
         QMessageBox.information(self, "成功", f"{level2}数据已保存")
@@ -546,31 +532,22 @@ class MainWindow(QMainWindow):
                     # 转换为绝对路径并规范化
                     abs_path = os.path.normpath(os.path.abspath(file_path))
                     
-                    # 调试日志
-                    logging.info(f"检查文件路径: {abs_path}")
-                    logging.info(f"文件存在: {os.path.exists(abs_path)}")
-                    
                     # 如果文件不存在，先尝试获取数据
                     if not os.path.exists(abs_path):
-                        logging.info("文件不存在，尝试下载...")
                         self.handle_fetch_data(level2)
                         if not os.path.exists(abs_path):
-                            logging.error("文件下载失败")
                             raise FileNotFoundError(f"文件不存在且获取失败: {abs_path}")
                     
                     # 打开文件
-                    logging.info(f"准备打开文件: {abs_path}")
                     QDesktopServices.openUrl(QUrl.fromLocalFile(abs_path))
                 except Exception as e:
                     error_msg = f"处理{level2}数据失败: {str(e)}"
-                    logging.error(f"{error_msg}\n{traceback.format_exc()}")
                     QMessageBox.critical(self, "错误", error_msg)
             
             try:
                 # 处理文件路径
                 file_path = file_path.strip()
                 abs_path = os.path.abspath(file_path)
-                logging.info(f"尝试打开文件: {abs_path}")
                 
                 if not os.path.exists(abs_path):
                     raise FileNotFoundError(f"文件不存在: {abs_path}")
@@ -578,8 +555,18 @@ class MainWindow(QMainWindow):
                 QDesktopServices.openUrl(QUrl.fromLocalFile(abs_path))
             except Exception as e:
                 error_msg = f"打开文件失败: {abs_path}\n错误: {str(e)}"
-                logging.error(f"{error_msg}\n{traceback.format_exc()}")
                 QMessageBox.critical(self, "错误", error_msg)
+
+    def open_config_file(self, file_path):
+        """打开配置文件"""
+        try:
+            abs_path = os.path.abspath(file_path)
+            if not os.path.exists(abs_path):
+                QMessageBox.warning(self, "警告", f"配置文件不存在: {abs_path}")
+                return
+            QDesktopServices.openUrl(QUrl.fromLocalFile(abs_path))
+        except Exception as e:
+            QMessageBox.critical(self, "错误", f"打开配置文件失败: {str(e)}")
 
     def show_about(self):
         """显示关于对话框"""
@@ -623,7 +610,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             error_msg = f"请求失败: {str(e)}"
             self.text_edit.append(error_msg)
-            logging.error(error_msg)
     
     def save_to_csv(self):
         """将当前结果保存为CSV文件"""
@@ -662,14 +648,13 @@ class MainWindow(QMainWindow):
         except Exception as e:
             error_msg = f"保存文件失败: {str(e)}"
             QMessageBox.critical(self, "错误", error_msg)
-            logging.error(error_msg)
 
 def main():
     import warnings
     warnings.filterwarnings("ignore", category=FutureWarning, module="akshare.*")
     app = QApplication(sys.argv)
     window = MainWindow()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
