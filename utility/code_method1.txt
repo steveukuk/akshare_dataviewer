@@ -1,0 +1,499 @@
+"""
+期权保证金 
+"""
+from akshare.option.option_margin import option_margin, option_margin_symbol
+
+"""
+东方财富-港股-证券资料
+"""
+from akshare.stock.stock_profile_em import stock_hk_company_profile_em, stock_hk_security_profile_em
+
+"""
+东方财富网-行情中心-债券市场-质押式回购
+"""
+from akshare.bond.bond_buy_back_em import bond_sh_buy_back_em, bond_sz_buy_back_em, bond_buy_back_hist_em
+
+"""
+东方财富-A股数据-股本结构
+"""
+from akshare.stock_fundamental.stock_gbjg_em import stock_zh_a_gbjg_em
+
+"""
+异步接口
+"""
+from akshare.stock_a.stock_zh_a_spot import stock_zh_a_spot_em as stock_zh_a_spot_em_async
+from akshare.stock_a.stock_individual_fund_flow_rank import (
+    stock_individual_fund_flow_rank as stock_individual_fund_flow_rank_async
+)
+from akshare.stock_a.stock_board_concept_name_em import stock_board_concept_name_em as stock_board_concept_name_em_async
+
+"""
+雪球-个股-公司概况-公司简介
+"""
+from akshare.stock_fundamental.stock_basic_info_xq import (
+    stock_individual_basic_info_xq,
+    stock_individual_basic_info_hk_xq,
+    stock_individual_basic_info_us_xq,
+)
+
+"""
+新浪财经-行情中心-环球市场
+"""
+from akshare.index.index_global_sina import index_global_hist_sina, index_global_name_table
+
+"""
+东方财富网-行情中心-全球指数
+"""
+from akshare.index.index_global_em import index_global_hist_em, index_global_spot_em
+
+"""
+东方财富网-行情中心-外汇市场-所有汇率
+"""
+from akshare.forex.forex_em import forex_hist_em, forex_spot_em
+
+"""
+东方财富网-行情中心-沪深港通
+"""
+from akshare.stock.stock_hsgt_em import stock_zh_ah_spot_em, stock_hsgt_sh_hk_spot_em
+
+"""
+东方财富-美股-财务分析-三大报表
+"""
+from akshare.stock_fundamental.stock_finance_us_em import (
+    stock_financial_us_report_em,
+    stock_financial_us_analysis_indicator_em,
+)
+
+"""
+期货行情-内盘-历史行情数据-东财
+"""
+from akshare.futures.futures_hist_em import futures_hist_table_em, futures_hist_em
+
+"""
+巨潮资讯-数据中心-专题统计-股东股本-股本变动
+"""
+from akshare.stock.stock_hold_control_cninfo import stock_hold_change_cninfo
+
+"""
+基金费率
+"""
+from akshare.fund.fund_fee_em import fund_fee_em
+
+"""
+东方财富网-数据中心-估值分析-每日互动-每日互动-估值分析
+"""
+from akshare.stock_feature.stock_value_em import stock_value_em
+
+"""
+已实现波动率
+"""
+from akshare.cal.rv import volatility_yz_rv, rv_from_futures_zh_minute_sina, rv_from_stock_zh_a_hist_min_em
+
+"""
+QDII
+"""
+from akshare.qdii.qdii_jsl import qdii_a_index_jsl, qdii_e_index_jsl, qdii_e_comm_jsl
+
+"""
+财新网-财新数据通
+"""
+from akshare.stock.stock_news_cx import stock_news_main_cx
+
+"""
+搜猪-生猪大数据-各省均价实时排行榜
+"""
+from akshare.spot.spot_hog_soozhu import (
+    spot_hog_soozhu,
+    spot_hog_year_trend_soozhu,
+    spot_hog_lean_price_soozhu,
+    spot_hog_three_way_soozhu,
+    spot_hog_crossbred_soozhu,
+    spot_corn_price_soozhu,
+    spot_soybean_price_soozhu,
+    spot_mixed_feed_soozhu,
+)
+
+"""
+知名港股
+"""
+from akshare.stock.stock_hk_famous import stock_hk_famous_spot_em
+
+"""
+同花顺-数据中心-宏观数据-股票筹资
+"""
+from akshare.economic.macro_finance_ths import macro_stock_finance, macro_rmb_loan, macro_rmb_deposit
+
+"""
+富途牛牛-主题投资-概念板块-成分股
+"""
+from akshare.stock_feature.stock_concept_futu import stock_concept_cons_futu
+
+"""
+商品期权手续费
+"""
+from akshare.option.option_comm_qihuo import option_comm_info, option_comm_symbol
+
+"""
+上海证券交易所-产品-股票期权-每日统计
+"""
+from akshare.option.option_daily_stats_sse_szse import option_daily_stats_sse, option_daily_stats_szse
+
+"""
+同花顺理财-基金数据-每日净值-ETF
+"""
+from akshare.fund.fund_etf_ths import fund_etf_spot_ths
+
+"""
+东方财富网-数据中心-融资融券-融资融券账户统计-两融账户信息
+"""
+from akshare.stock_feature.stock_margin_em import stock_margin_account_info
+
+"""
+现货走势
+"""
+from akshare.spot.spot_price_qh import spot_price_qh, spot_price_table_qh
+
+"""
+华尔街见闻-日历-宏观
+"""
+from akshare.economic.macro_info_ws import macro_info_ws
+
+"""
+数库-A股新闻情绪指数
+"""
+from akshare.index.index_zh_a_scope import index_news_sentiment_scope
+
+"""
+申万宏源研究-申万指数-指数发布-基金指数-实时行情
+"""
+from akshare.index.index_research_fund_sw import index_hist_fund_sw, index_realtime_fund_sw
+
+"""
+东方财富-财经早餐
+"""
+from akshare.stock_feature.stock_info import (
+    stock_info_cjzc_em,
+    stock_info_global_em,
+    stock_info_global_ths,
+    stock_info_global_futu,
+    stock_info_global_sina,
+    stock_info_global_cls,
+    stock_info_broker_sina,
+)
+
+"""
+期货交易-参数汇总查询
+"""
+from akshare.futures_derivative.futures_contract_info_shfe import futures_contract_info_shfe
+from akshare.futures_derivative.futures_contract_info_dce import futures_contract_info_dce
+from akshare.futures_derivative.futures_contract_info_czce import futures_contract_info_czce
+from akshare.futures_derivative.futures_contract_info_gfex import futures_contract_info_gfex
+from akshare.futures_derivative.futures_contract_info_cffex import futures_contract_info_cffex
+from akshare.futures_derivative.futures_contract_info_ine import futures_contract_info_ine
+
+"""
+上海期货交易所-指定交割仓库-库存周报
+"""
+from akshare.futures.futures_stock_js import futures_stock_shfe_js
+
+"""
+东方财富-数据中心-沪深港通-市场概括-分时数据
+"""
+from akshare.stock_feature.stock_hsgt_min_em import stock_hsgt_fund_min_em
+
+"""
+东方财富网-行情中心-期货市场-国际期货
+"""
+from akshare.futures.futures_hf_em import futures_global_spot_em, futures_global_hist_em
+
+"""
+雪球行情数据
+"""
+from akshare.stock.stock_xq import (
+    stock_individual_spot_xq,
+)
+
+"""
+港股盈利预测
+"""
+from akshare.stock_fundamental.stock_profit_forecast_hk_etnet import stock_hk_profit_forecast_et
+
+"""
+巨潮资讯-首页-公告查询-信息披露
+"""
+from akshare.stock_feature.stock_disclosure_cninfo import (
+    stock_zh_a_disclosure_relation_cninfo,
+    stock_zh_a_disclosure_report_cninfo,
+)
+
+"""
+东财财富-分时数据
+"""
+from akshare.stock.stock_intraday_sina import stock_intraday_sina
+
+"""
+股票日行情
+"""
+from akshare.stock_feature.stock_hist_tx import stock_zh_a_hist_tx
+
+"""
+筹码分布
+"""
+from akshare.stock_feature.stock_cyq_em import stock_cyq_em
+
+"""
+东财财富-分时数据
+"""
+from akshare.stock.stock_intraday_em import stock_intraday_em
+
+"""
+美股指数行情
+"""
+from akshare.index.index_stock_us_sina import index_us_stock_sina
+
+"""
+董监高及相关人员持股变动
+"""
+from akshare.stock.stock_share_hold import (
+    stock_share_hold_change_bse,
+    stock_share_hold_change_sse,
+    stock_share_hold_change_szse,
+)
+
+"""
+东方财富网-数据中心-研究报告-个股研报
+"""
+from akshare.stock_feature.stock_research_report_em import stock_research_report_em
+
+"""
+东方财富网-数据中心-重大合同-重大合同明细
+"""
+from akshare.stock_feature.stock_zdhtmx_em import stock_zdhtmx_em
+
+"""
+东方财富网-数据中心-股东大会
+"""
+from akshare.stock_feature.stock_gddh_em import stock_gddh_em
+
+"""
+东方财富网-数据中心-股市日历
+"""
+from akshare.stock.stock_gsrl_em import stock_gsrl_gsdt_em
+
+"""
+东方财富网-数据中心-特色数据-高管持股
+"""
+from akshare.stock.stock_hold_control_em import (
+    stock_hold_management_detail_em,
+    stock_hold_management_person_em,
+)
+
+"""
+新浪财经-债券-可转债
+"""
+from akshare.bond.bond_cb_sina import bond_cb_profile_sina, bond_cb_summary_sina
+
+"""
+上证e互动
+"""
+from akshare.stock_feature.stock_sns_sseinfo import stock_sns_sseinfo
+
+"""
+互动易-提问与回答
+"""
+from akshare.stock_feature.stock_irm_cninfo import (
+    stock_irm_cninfo,
+    stock_irm_ans_cninfo,
+)
+
+"""
+基金公告-人事公告
+"""
+from akshare.fund.fund_announcement import fund_announcement_personnel_em
+
+"""
+新浪财经-ESG评级中心
+"""
+from akshare.stock_feature.stock_esg_sina import (
+    stock_esg_msci_sina,
+    stock_esg_rft_sina,
+    stock_esg_rate_sina,
+    stock_esg_zd_sina,
+    stock_esg_hz_sina,
+)
+
+"""
+LOF 行情数据
+"""
+from akshare.fund.fund_lof_em import (
+    fund_lof_hist_em,
+    fund_lof_spot_em,
+    fund_lof_hist_min_em,
+)
+
+"""
+同花顺-财务指标-主要指标
+"""
+from akshare.stock_fundamental.stock_finance_ths import (
+    stock_financial_abstract_ths,
+    stock_financial_debt_ths,
+    stock_financial_benefit_ths,
+    stock_financial_cash_ths,
+    stock_management_change_ths,
+    stock_shareholder_change_ths,
+)
+
+"""
+港股股票指数数据-新浪-东财
+"""
+from akshare.index.index_stock_hk import (
+    stock_hk_index_spot_sina,
+    stock_hk_index_daily_em,
+    stock_hk_index_spot_em,
+    stock_hk_index_daily_sina,
+)
+
+"""
+同花顺-数据中心-可转债
+"""
+from akshare.bond.bond_cb_ths import bond_zh_cov_info_ths
+
+"""
+同花顺-港股-分红派息
+"""
+from akshare.stock.stock_hk_fhpx_ths import stock_hk_fhpx_detail_ths
+
+"""
+同花顺-分红融资
+"""
+from akshare.stock_feature.stock_fhps_ths import stock_fhps_detail_ths
+
+"""
+东方财富-行情报价
+"""
+from akshare.stock.stock_ask_bid_em import stock_bid_ask_em
+
+"""
+同花顺-盈利预测
+"""
+from akshare.stock_fundamental.stock_profit_forecast_ths import (
+    stock_profit_forecast_ths,
+)
+
+"""
+期货资讯
+"""
+from akshare.futures.futures_news_shmet import futures_news_shmet
+
+"""
+主营介绍
+"""
+from akshare.stock_fundamental.stock_zyjs_ths import stock_zyjs_ths
+
+"""
+东方财富-ETF 行情
+"""
+from akshare.fund.fund_etf_em import (
+    fund_etf_hist_em,
+    fund_etf_hist_min_em,
+    fund_etf_spot_em,
+)
+
+"""
+乐咕乐股-股债利差
+"""
+from akshare.stock_feature.stock_ebs_lg import stock_ebs_lg
+
+"""
+乐咕乐股-基金仓位
+"""
+from akshare.fund.fund_position_lg import (
+    fund_stock_position_lg,
+    fund_balance_position_lg,
+    fund_linghuo_position_lg,
+)
+
+"""
+乐咕乐股-大盘拥挤度
+"""
+from akshare.stock_feature.stock_congestion_lg import stock_a_congestion_lg
+
+"""
+乐咕乐股-股息率-A 股股息率
+"""
+from akshare.stock_feature.stock_gxl_lg import stock_a_gxl_lg, stock_hk_gxl_lg
+
+"""
+东方财富-限售解禁股
+"""
+from akshare.stock_fundamental.stock_restricted_em import (
+    stock_restricted_release_stockholder_em,
+    stock_restricted_release_summary_em,
+    stock_restricted_release_detail_em,
+    stock_restricted_release_queue_em,
+)
+
+"""
+同花顺行业一览表
+"""
+from akshare.stock_feature.stock_board_industry_ths import (
+    stock_board_industry_summary_ths,
+)
+
+"""
+生猪市场价格指数
+"""
+from akshare.index.index_hog import index_hog_spot_price
+
+"""
+债券信息查询
+"""
+from akshare.bond.bond_info_cm import (
+    bond_info_detail_cm,
+    bond_info_cm,
+    bond_info_cm_query,
+)
+
+"""
+申万宏源研究-指数系列
+"""
+from akshare.index.index_research_sw import (
+    index_realtime_sw,
+    index_hist_sw,
+    index_component_sw,
+    index_min_sw,
+    index_analysis_daily_sw,
+    index_analysis_weekly_sw,
+    index_analysis_monthly_sw,
+    index_analysis_week_month_sw,
+)
+
+"""
+50ETF 期权波动率指数
+"""
+from akshare.index.index_option_qvix import (
+    index_option_50etf_qvix,
+    index_option_300etf_min_qvix,
+    index_option_300etf_qvix,
+    index_option_50etf_min_qvix,
+    index_option_1000index_min_qvix,
+    index_option_1000index_qvix,
+    index_option_100etf_min_qvix,
+    index_option_100etf_qvix,
+    index_option_300index_min_qvix,
+    index_option_300index_qvix,
+    index_option_500etf_min_qvix,
+    index_option_500etf_qvix,
+    index_option_50index_min_qvix,
+    index_option_50index_qvix,
+    index_option_cyb_min_qvix,
+    index_option_cyb_qvix,
+    index_option_kcb_min_qvix,
+    index_option_kcb_qvix,
+)
+
+"""
+百度股市通-外汇-行情榜单
+"""
+from akshare.fx.fx_quote_baidu import fx_quote_baidu
+

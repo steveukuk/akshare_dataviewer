@@ -1,0 +1,460 @@
+
+"""
+行业市盈率
+"""
+from akshare.stock.stock_industry_pe_cninfo import (
+    stock_industry_pe_ratio_cninfo,
+)
+
+"""
+申万宏源行业分类数据
+"""
+
+from akshare.stock.stock_industry_sw import stock_industry_clf_hist_sw
+
+"""
+投资评级
+"""
+from akshare.stock.stock_rank_forecast import stock_rank_forecast_cninfo
+
+"""
+美股-知名美股
+"""
+from akshare.stock.stock_us_famous import stock_us_famous_spot_em
+
+"""
+美股-粉单市场
+"""
+from akshare.stock.stock_us_pink import stock_us_pink_spot_em
+
+"""
+REITs
+"""
+from akshare.reits.reits_basic import reits_realtime_em, reits_hist_em
+
+"""
+全部 A 股-等权重市盈率、中位数市盈率
+全部 A 股-等权重、中位数市净率
+"""
+from akshare.stock_feature.stock_ttm_lyr import stock_a_ttm_lyr
+from akshare.stock_feature.stock_all_pb import stock_a_all_pb
+
+"""
+宏观-加拿大
+"""
+from akshare.economic.macro_canada import (
+    macro_canada_cpi_monthly,
+    macro_canada_core_cpi_monthly,
+    macro_canada_bank_rate,
+    macro_canada_core_cpi_yearly,
+    macro_canada_cpi_yearly,
+    macro_canada_gdp_monthly,
+    macro_canada_new_house_rate,
+    macro_canada_retail_rate_monthly,
+    macro_canada_trade,
+    macro_canada_unemployment_rate,
+)
+
+"""
+猪肉价格信息
+"""
+from akshare.futures_derivative.futures_hog import (
+    futures_hog_core,
+    futures_hog_cost,
+    futures_hog_supply,
+)
+
+"""
+宏观-澳大利亚
+"""
+from akshare.economic.macro_australia import (
+    macro_australia_bank_rate,
+    macro_australia_unemployment_rate,
+    macro_australia_trade,
+    macro_australia_cpi_quarterly,
+    macro_australia_cpi_yearly,
+    macro_australia_ppi_quarterly,
+    macro_australia_retail_rate_monthly,
+)
+
+"""
+融资融券-深圳
+"""
+from akshare.stock_feature.stock_margin_szse import (
+    stock_margin_underlying_info_szse,
+    stock_margin_detail_szse,
+    stock_margin_szse,
+)
+
+"""
+英国-宏观
+"""
+from akshare.economic.macro_uk import (
+    macro_uk_gdp_yearly,
+    macro_uk_gdp_quarterly,
+    macro_uk_retail_yearly,
+    macro_uk_rightmove_monthly,
+    macro_uk_rightmove_yearly,
+    macro_uk_unemployment_rate,
+    macro_uk_halifax_monthly,
+    macro_uk_bank_rate,
+    macro_uk_core_cpi_monthly,
+    macro_uk_core_cpi_yearly,
+    macro_uk_cpi_monthly,
+    macro_uk_cpi_yearly,
+    macro_uk_halifax_yearly,
+    macro_uk_retail_monthly,
+    macro_uk_trade,
+)
+
+"""
+日本-宏观
+"""
+from akshare.economic.macro_japan import (
+    macro_japan_bank_rate,
+    macro_japan_core_cpi_yearly,
+    macro_japan_cpi_yearly,
+    macro_japan_head_indicator,
+    macro_japan_unemployment_rate,
+)
+
+"""
+瑞士-宏观
+"""
+from akshare.economic.macro_swiss import (
+    macro_swiss_trade,
+    macro_swiss_svme,
+    macro_swiss_cpi_yearly,
+    macro_swiss_gbd_yearly,
+    macro_swiss_gbd_bank_rate,
+    macro_swiss_gdp_quarterly,
+)
+
+"""
+东方财富-概念板块
+"""
+from akshare.stock.stock_board_concept_em import (
+    stock_board_concept_cons_em,
+    stock_board_concept_hist_em,
+    stock_board_concept_hist_min_em,
+    stock_board_concept_name_em,
+    stock_board_concept_spot_em,
+)
+
+"""
+德国-经济指标
+"""
+from akshare.economic.macro_germany import (
+    macro_germany_gdp,
+    macro_germany_ifo,
+    macro_germany_cpi_monthly,
+    macro_germany_retail_sale_monthly,
+    macro_germany_trade_adjusted,
+    macro_germany_retail_sale_yearly,
+    macro_germany_cpi_yearly,
+    macro_germany_zew,
+)
+
+"""
+基金规模和规模趋势
+"""
+from akshare.fund.fund_aum_em import (
+    fund_aum_em,
+    fund_aum_trend_em,
+    fund_aum_hist_em,
+)
+
+"""
+CME 比特币成交量
+"""
+from akshare.crypto.crypto_bitcoin_cme import crypto_bitcoin_cme
+
+"""
+盘口异动
+"""
+from akshare.stock_feature.stock_pankou_em import (
+    stock_changes_em,
+    stock_board_change_em,
+)
+
+"""
+A 股东方财富
+"""
+from akshare.stock_feature.stock_hist_em import (
+    stock_zh_a_spot_em,
+    stock_bj_a_spot_em,
+    stock_new_a_spot_em,
+    stock_kc_a_spot_em,
+    stock_cy_a_spot_em,
+    stock_sh_a_spot_em,
+    stock_sz_a_spot_em,
+    stock_zh_b_spot_em,
+    stock_zh_ab_comparison_em,
+    stock_zh_a_hist,
+    stock_hk_spot_em,
+    stock_hk_main_board_spot_em,
+    stock_hk_hist,
+    stock_us_spot_em,
+    stock_us_hist,
+    stock_zh_a_hist_min_em,
+    stock_zh_a_hist_pre_min_em,
+    stock_hk_hist_min_em,
+    stock_us_hist_min_em,
+)
+
+"""
+中行人民币牌价历史数据查询
+"""
+from akshare.currency.currency_china_bank_sina import currency_boc_sina
+
+"""
+期货持仓
+"""
+from akshare.futures_derivative.futures_cot_sina import futures_hold_pos_sina
+
+"""
+股东户数
+"""
+from akshare.stock_feature.stock_gdhs import (
+    stock_zh_a_gdhs,
+    stock_zh_a_gdhs_detail_em,
+)
+
+"""
+两网及退市
+"""
+from akshare.stock.stock_stop import stock_staq_net_stop
+
+"""
+涨停板行情
+"""
+from akshare.stock_feature.stock_ztb_em import (
+    stock_zt_pool_em,
+    stock_zt_pool_previous_em,
+    stock_zt_pool_dtgc_em,
+    stock_zt_pool_zbgc_em,
+    stock_zt_pool_strong_em,
+    stock_zt_pool_sub_new_em,
+)
+
+"""
+中国-香港-宏观
+"""
+from akshare.economic.macro_china_hk import (
+    macro_china_hk_cpi,
+    macro_china_hk_cpi_ratio,
+    macro_china_hk_trade_diff_ratio,
+    macro_china_hk_gbp_ratio,
+    macro_china_hk_building_amount,
+    macro_china_hk_building_volume,
+    macro_china_hk_gbp,
+    macro_china_hk_ppi,
+    macro_china_hk_rate_of_unemployment,
+)
+
+"""
+增发和配股
+"""
+from akshare.stock_feature.stock_zf_pg import stock_qbzf_em, stock_pg_em
+
+"""
+汽车销量
+"""
+from akshare.other.other_car_gasgoo import car_sale_rank_gasgoo
+from akshare.other.other_car_cpca import (
+    car_market_cate_cpca,
+    car_market_fuel_cpca,
+    car_market_segment_cpca,
+    car_market_country_cpca,
+    car_market_man_rank_cpca,
+    car_market_total_cpca,
+)
+
+"""
+中国公路物流运价、运量指数
+"""
+from akshare.index.index_cflp import index_price_cflp, index_volume_cflp
+
+"""
+赚钱效应分析
+"""
+from akshare.stock_feature.stock_market_legu import stock_market_activity_legu
+
+"""
+浙江省排污权交易指数
+"""
+from akshare.index.index_eri import index_eri
+
+"""
+Drewry 集装箱指数
+"""
+from akshare.index.index_drewry import drewry_wci_index
+
+"""
+柯桥指数
+"""
+from akshare.index.index_kq_fz import index_kq_fz
+from akshare.index.index_kq_ss import index_kq_fashion
+
+"""
+新发基金
+"""
+from akshare.fund.fund_init_em import fund_new_found_em
+
+"""
+高管持股
+"""
+from akshare.stock_feature.stock_gdzjc_em import stock_ggcg_em
+
+"""
+同花顺-数据中心-资金流向-概念资金流
+"""
+from akshare.stock_feature.stock_fund_flow import (
+    stock_fund_flow_concept,
+    stock_fund_flow_industry,
+    stock_fund_flow_big_deal,
+    stock_fund_flow_individual,
+)
+
+"""
+比特币持仓
+"""
+from akshare.crypto.crypto_hold import crypto_bitcoin_hold_report
+
+"""
+证券交易营业部排行
+"""
+from akshare.stock_feature.stock_lh_yybpm import (
+    stock_lh_yyb_capital,
+    stock_lh_yyb_most,
+    stock_lh_yyb_control,
+)
+
+"""
+沪深 A 股公告
+"""
+from akshare.stock_fundamental.stock_notice import stock_notice_report
+
+"""
+首发企业申报
+"""
+from akshare.stock_fundamental.stock_ipo_declare import stock_ipo_declare
+
+"""
+三大报表
+"""
+from akshare.stock_feature.stock_report_em import (
+    stock_zcfz_em,
+    stock_zcfz_bj_em,
+    stock_lrb_em,
+    stock_xjll_em,
+)
+
+"""
+业绩报告
+"""
+from akshare.stock_feature.stock_yjbb_em import stock_yjbb_em
+
+"""
+同花顺-概念板块
+"""
+from akshare.stock_feature.stock_board_concept_ths import (
+    stock_board_concept_info_ths,
+    stock_board_concept_summary_ths,
+    stock_board_concept_index_ths,
+    stock_board_concept_name_ths,
+)
+
+"""
+同花顺-行业板块
+"""
+from akshare.stock_feature.stock_board_industry_ths import (
+    stock_board_industry_name_ths,
+    stock_board_industry_info_ths,
+    stock_board_industry_index_ths,
+    stock_ipo_benefit_ths,
+    stock_xgsr_ths,
+)
+
+"""
+分红配送
+"""
+from akshare.stock_feature.stock_fhps_em import stock_fhps_em, stock_fhps_detail_em
+
+"""
+中美国债收益率
+"""
+from akshare.bond.bond_em import bond_zh_us_rate
+
+"""
+盈利预测
+"""
+from akshare.stock_fundamental.stock_profit_forecast_em import (
+    stock_profit_forecast_em,
+)
+
+"""
+基金经理
+"""
+from akshare.fund.fund_manager import fund_manager_em
+
+"""
+基金评级
+"""
+from akshare.fund.fund_rating import (
+    fund_rating_sh,
+    fund_rating_zs,
+    fund_rating_ja,
+    fund_rating_all,
+)
+
+"""
+融资融券数据
+"""
+from akshare.stock_feature.stock_margin_sse import (
+    stock_margin_detail_sse,
+    stock_margin_sse,
+    stock_margin_ratio_pa,
+)
+
+"""
+期货交割和期转现
+"""
+from akshare.futures.futures_to_spot import (
+    futures_to_spot_czce,
+    futures_to_spot_shfe,
+    futures_to_spot_dce,
+    futures_delivery_dce,
+    futures_delivery_shfe,
+    futures_delivery_czce,
+    futures_delivery_match_dce,
+    futures_delivery_match_czce,
+)
+
+"""
+基金持仓
+"""
+from akshare.fund.fund_portfolio_em import (
+    fund_portfolio_hold_em,
+    fund_portfolio_change_em,
+    fund_portfolio_bond_hold_em,
+    fund_portfolio_industry_allocation_em,
+)
+
+"""
+债券概览
+"""
+from akshare.bond.bond_summary import (
+    bond_deal_summary_sse,
+    bond_cash_summary_sse,
+)
+
+"""
+新闻-个股新闻
+"""
+from akshare.news.news_stock import stock_news_em
+
+"""
+股票数据-一致行动人
+"""
+from akshare.stock_feature.stock_yzxdr_em import stock_yzxdr_em

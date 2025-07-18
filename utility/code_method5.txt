@@ -1,0 +1,593 @@
+
+"""
+百度迁徙地图接口
+"""
+from akshare.event.migration import (
+    migration_area_baidu,
+    migration_scale_baidu,
+)
+
+"""
+英为财情-外汇-货币对历史数据
+"""
+from akshare.fx.currency_investing import (
+    currency_pair_map,
+)
+
+"""
+商品期权-郑州商品交易所-期权-历史数据
+"""
+from akshare.option.option_czce import option_czce_hist
+
+"""
+宏观-经济数据-银行间拆借利率
+"""
+from akshare.interest_rate.interbank_rate_em import rate_interbank
+
+"""
+金十数据中心-外汇情绪
+"""
+from akshare.economic.macro_other import macro_fx_sentiment
+
+"""
+金十数据中心-经济指标-欧元区
+"""
+from akshare.economic.macro_euro import (
+    macro_euro_gdp_yoy,
+    macro_euro_cpi_mom,
+    macro_euro_cpi_yoy,
+    macro_euro_current_account_mom,
+    macro_euro_employment_change_qoq,
+    macro_euro_industrial_production_mom,
+    macro_euro_manufacturing_pmi,
+    macro_euro_ppi_mom,
+    macro_euro_retail_sales_mom,
+    macro_euro_sentix_investor_confidence,
+    macro_euro_services_pmi,
+    macro_euro_trade_balance,
+    macro_euro_unemployment_rate_mom,
+    macro_euro_zew_economic_sentiment,
+    macro_euro_lme_holding,
+    macro_euro_lme_stock,
+)
+
+"""
+金十数据中心-经济指标-央行利率-主要央行利率
+"""
+from akshare.economic.macro_bank import (
+    macro_bank_australia_interest_rate,
+    macro_bank_brazil_interest_rate,
+    macro_bank_brazil_interest_rate,
+    macro_bank_china_interest_rate,
+    macro_bank_english_interest_rate,
+    macro_bank_euro_interest_rate,
+    macro_bank_india_interest_rate,
+    macro_bank_japan_interest_rate,
+    macro_bank_newzealand_interest_rate,
+    macro_bank_russia_interest_rate,
+    macro_bank_switzerland_interest_rate,
+    macro_bank_usa_interest_rate,
+)
+
+"""
+义乌小商品指数
+"""
+from akshare.index.index_yw import index_yw
+
+"""
+股票指数-股票指数-成份股
+"""
+from akshare.index.index_cons import (
+    index_stock_info,
+    index_stock_cons,
+    index_stock_cons_sina,
+    index_stock_cons_csindex,
+    index_stock_cons_weight_csindex,
+    stock_a_code_to_symbol,
+)
+
+"""
+东方财富-股票账户
+"""
+from akshare.stock_feature.stock_account_em import stock_account_statistics_em
+
+"""
+期货规则
+"""
+from akshare.futures.futures_rule import futures_rule
+
+"""
+东方财富-商誉专题
+"""
+from akshare.stock_feature.stock_sy_em import (
+    stock_sy_profile_em,
+    stock_sy_yq_em,
+    stock_sy_jz_em,
+    stock_sy_em,
+    stock_sy_hy_em,
+)
+
+"""
+东方财富-股票质押
+"""
+from akshare.stock_feature.stock_gpzy_em import (
+    stock_gpzy_pledge_ratio_em,
+    stock_gpzy_profile_em,
+    stock_gpzy_distribute_statistics_bank_em,
+    stock_gpzy_distribute_statistics_company_em,
+    stock_gpzy_industry_data_em,
+    stock_gpzy_pledge_ratio_detail_em,
+)
+
+"""
+东方财富-机构调研
+"""
+from akshare.stock_feature.stock_jgdy_em import (
+    stock_jgdy_tj_em,
+    stock_jgdy_detail_em,
+)
+
+"""
+新浪主力连续接口
+"""
+from akshare.futures_derivative.futures_index_sina import (
+    futures_main_sina,
+    futures_display_main_sina,
+)
+
+"""
+中国宏观杠杆率数据
+"""
+from akshare.economic.marco_cnbs import macro_cnbs
+
+"""
+大宗商品-现货价格指数
+"""
+from akshare.index.index_spot import spot_goods
+
+"""
+成本-世界各大城市生活成本
+"""
+from akshare.cost.cost_living import cost_living
+
+"""
+能源-碳排放权
+"""
+from akshare.energy.energy_carbon import (
+    energy_carbon_domestic,
+    energy_carbon_bj,
+    energy_carbon_eu,
+    energy_carbon_gz,
+    energy_carbon_hb,
+    energy_carbon_sz,
+)
+
+"""
+中国证券投资基金业协会-信息公示
+"""
+from akshare.fund.fund_amac import (
+    amac_manager_info,
+    amac_member_info,
+    amac_member_sub_info,
+    amac_aoin_info,
+    amac_fund_account_info,
+    amac_fund_info,
+    amac_fund_sub_info,
+    amac_futures_info,
+    amac_manager_cancelled_info,
+    amac_securities_info,
+    amac_fund_abs,
+    amac_manager_classify_info,
+    amac_person_fund_org_list,
+    amac_person_bond_org_list,
+)
+
+"""
+申万行业一级
+"""
+from akshare.index.index_sw import (
+    sw_index_third_cons,
+    sw_index_first_info,
+    sw_index_second_info,
+    sw_index_third_info,
+)
+
+"""
+经济政策不确定性指数
+"""
+from akshare.article.epu_index import article_epu_index
+
+"""
+空气-河北
+"""
+from akshare.air.air_hebei import air_quality_hebei
+
+"""
+日出和日落
+"""
+from akshare.air.sunrise_tad import sunrise_daily, sunrise_monthly
+
+"""
+新浪-指数实时行情和历史行情
+"""
+from akshare.stock.stock_zh_a_tick_tx import (
+    stock_zh_a_tick_tx_js,
+)
+
+"""
+新浪-指数实时行情和历史行情
+"""
+from akshare.index.index_stock_zh import (
+    stock_zh_index_daily,
+    stock_zh_index_spot_sina,
+    stock_zh_index_spot_em,
+    stock_zh_index_daily_tx,
+    stock_zh_index_daily_em,
+)
+
+"""
+外盘期货实时行情
+"""
+from akshare.futures.futures_hq_sina import (
+    futures_foreign_commodity_realtime,
+    futures_foreign_commodity_subscribe_exchange_symbol,
+    futures_hq_subscribe_exchange_symbol,
+)
+
+"""
+FF多因子数据接口
+"""
+from akshare.article.ff_factor import article_ff_crr
+
+"""
+Realized Library 接口
+"""
+from akshare.article.risk_rv import (
+    article_oman_rv,
+    article_oman_rv_short,
+    article_rlab_rv,
+)
+
+"""
+银保监分局本级行政处罚数据
+"""
+from akshare.bank.bank_cbirc_2020 import bank_fjcf_table_detail
+
+"""
+科创板股票
+"""
+from akshare.stock.stock_zh_kcb_sina import (
+    stock_zh_kcb_spot,
+    stock_zh_kcb_daily,
+)
+
+"""
+A股
+"""
+from akshare.stock.stock_zh_a_sina import (
+    stock_zh_a_spot,
+    stock_zh_a_daily,
+    stock_zh_a_minute,
+    stock_zh_a_cdr_daily,
+)
+
+"""
+A+H股
+"""
+from akshare.stock.stock_zh_ah_tx import (
+    stock_zh_ah_spot,
+    stock_zh_ah_daily,
+    stock_zh_ah_name,
+)
+
+"""
+加密货币
+"""
+from akshare.economic.macro_other import crypto_js_spot
+
+"""
+金融期权
+"""
+from akshare.option.option_finance import (
+    option_finance_board,
+    option_finance_sse_underlying,
+)
+
+"""
+新浪-美股实时行情数据和历史行情数据(前复权)
+"""
+from akshare.stock.stock_us_sina import (
+    stock_us_daily,
+    stock_us_spot,
+    get_us_stock_name,
+)
+
+"""
+新浪-港股实时行情数据和历史数据(前复权和后复权因子)
+"""
+from akshare.stock.stock_hk_sina import stock_hk_daily, stock_hk_spot
+
+"""
+生意社-商品与期货-现期图数据
+"""
+from akshare.futures_derivative.futures_spot_sys import futures_spot_sys
+
+"""
+全球宏观-机构宏观
+"""
+from akshare.economic.macro_constitute import (
+    macro_cons_gold,
+    macro_cons_silver,
+    macro_cons_opec_month,
+)
+
+"""
+全球宏观-美国宏观
+"""
+from akshare.economic.macro_usa import (
+    macro_usa_eia_crude_rate,
+    macro_usa_non_farm,
+    macro_usa_unemployment_rate,
+    macro_usa_adp_employment,
+    macro_usa_core_pce_price,
+    macro_usa_cpi_monthly,
+    macro_usa_cpi_yoy,
+    macro_usa_crude_inner,
+    macro_usa_gdp_monthly,
+    macro_usa_initial_jobless,
+    macro_usa_lmci,
+    macro_usa_api_crude_stock,
+    macro_usa_building_permits,
+    macro_usa_business_inventories,
+    macro_usa_cb_consumer_confidence,
+    macro_usa_core_cpi_monthly,
+    macro_usa_core_ppi,
+    macro_usa_current_account,
+    macro_usa_durable_goods_orders,
+    macro_usa_trade_balance,
+    macro_usa_spcs20,
+    macro_usa_services_pmi,
+    macro_usa_rig_count,
+    macro_usa_retail_sales,
+    macro_usa_real_consumer_spending,
+    macro_usa_ppi,
+    macro_usa_pmi,
+    macro_usa_personal_spending,
+    macro_usa_pending_home_sales,
+    macro_usa_nfib_small_business,
+    macro_usa_new_home_sales,
+    macro_usa_nahb_house_market_index,
+    macro_usa_michigan_consumer_sentiment,
+    macro_usa_exist_home_sales,
+    macro_usa_export_price,
+    macro_usa_factory_orders,
+    macro_usa_house_price_index,
+    macro_usa_house_starts,
+    macro_usa_import_price,
+    macro_usa_industrial_production,
+    macro_usa_ism_non_pmi,
+    macro_usa_ism_pmi,
+    macro_usa_job_cuts,
+    macro_usa_cftc_nc_holding,
+    macro_usa_cftc_c_holding,
+    macro_usa_cftc_merchant_currency_holding,
+    macro_usa_cftc_merchant_goods_holding,
+    macro_usa_cme_merchant_goods_holding,
+    macro_usa_phs,
+)
+
+"""
+全球宏观-中国宏观
+"""
+from akshare.economic.macro_china import (
+    macro_china_bank_financing,
+    macro_china_insurance_income,
+    macro_china_mobile_number,
+    macro_china_vegetable_basket,
+    macro_china_agricultural_product,
+    macro_china_agricultural_index,
+    macro_china_energy_index,
+    macro_china_commodity_price_index,
+    macro_global_sox_index,
+    macro_china_yw_electronic_index,
+    macro_china_construction_index,
+    macro_china_construction_price_index,
+    macro_china_lpi_index,
+    macro_china_bdti_index,
+    macro_china_bsi_index,
+    macro_china_cpi_monthly,
+    macro_china_cpi_yearly,
+    macro_china_m2_yearly,
+    macro_china_fx_reserves_yearly,
+    macro_china_cx_pmi_yearly,
+    macro_china_pmi_yearly,
+    macro_china_daily_energy,
+    macro_china_non_man_pmi,
+    macro_china_rmb,
+    macro_china_gdp_yearly,
+    macro_china_shrzgm,
+    macro_china_ppi_yearly,
+    macro_china_cx_services_pmi_yearly,
+    macro_china_market_margin_sh,
+    macro_china_market_margin_sz,
+    macro_china_au_report,
+    macro_china_exports_yoy,
+    macro_china_hk_market_info,
+    macro_china_imports_yoy,
+    macro_china_trade_balance,
+    macro_china_shibor_all,
+    macro_china_industrial_production_yoy,
+    macro_china_gyzjz,
+    macro_china_lpr,
+    macro_china_new_house_price,
+    macro_china_enterprise_boom_index,
+    macro_china_national_tax_receipts,
+    macro_china_new_financial_credit,
+    macro_china_fx_gold,
+    macro_china_money_supply,
+    macro_china_stock_market_cap,
+    macro_china_cpi,
+    macro_china_gdp,
+    macro_china_ppi,
+    macro_china_pmi,
+    macro_china_gdzctz,
+    macro_china_hgjck,
+    macro_china_czsr,
+    macro_china_whxd,
+    macro_china_wbck,
+    macro_china_xfzxx,
+    macro_china_reserve_requirement_ratio,
+    macro_china_consumer_goods_retail,
+    macro_china_society_electricity,
+    macro_china_society_traffic_volume,
+    macro_china_postal_telecommunicational,
+    macro_china_international_tourism_fx,
+    macro_china_passenger_load_factor,
+    macro_china_freight_index,
+    macro_china_central_bank_balance,
+    macro_china_insurance,
+    macro_china_supply_of_money,
+    macro_china_foreign_exchange_gold,
+    macro_china_retail_price_index,
+    macro_china_real_estate,
+    macro_china_qyspjg,
+    macro_china_fdi,
+    macro_shipping_bci,
+    macro_shipping_bcti,
+    macro_shipping_bdi,
+    macro_shipping_bpi,
+    macro_china_urban_unemployment,
+)
+
+"""
+全球宏观-中国宏观-国家统计局
+"""
+from akshare.economic.macro_china_nbs import (
+    macro_china_nbs_nation,
+    macro_china_nbs_region
+)
+
+"""
+外汇
+"""
+from akshare.fx.fx_quote import fx_pair_quote, fx_spot_quote, fx_swap_quote
+
+"""
+债券行情
+"""
+from akshare.bond.bond_china import (
+    bond_spot_quote,
+    bond_spot_deal,
+    bond_china_yield,
+)
+
+"""
+商品期权
+"""
+from akshare.option.option_commodity import (
+    option_dce_daily,
+    option_czce_daily,
+    option_shfe_daily,
+    option_gfex_vol_daily,
+    option_gfex_daily,
+)
+
+"""
+99期货-期货库存数据
+"""
+from akshare.futures.futures_inventory_99 import futures_inventory_99
+
+"""
+东方财富-期货库存数据
+"""
+from akshare.futures.futures_inventory_em import futures_inventory_em
+
+"""
+中国银行间市场交易商协会
+"""
+from akshare.bond.bond_nafmii import bond_debt_nafmii
+
+"""
+奇货可查-工具模块
+"""
+from akshare.qhkc_web.qhkc_tool import qhkc_tool_foreign, qhkc_tool_gdp
+
+"""
+奇货可查-指数模块
+"""
+from akshare.qhkc_web.qhkc_index import (
+    get_qhkc_index,
+    get_qhkc_index_trend,
+    get_qhkc_index_profit_loss,
+)
+
+"""
+奇货可查-资金模块
+"""
+from akshare.qhkc_web.qhkc_fund import (
+    get_qhkc_fund_money_change,
+    get_qhkc_fund_bs,
+    get_qhkc_fund_position,
+)
+
+"""
+大宗商品现货价格及基差
+"""
+from akshare.futures.futures_basis import (
+    futures_spot_price_daily,
+    futures_spot_price,
+    futures_spot_price_previous,
+)
+
+"""
+期货持仓成交排名数据
+"""
+from akshare.futures.cot import (
+    get_rank_sum_daily,
+    get_rank_sum,
+    get_shfe_rank_table,
+    get_czce_rank_table,
+    get_dce_rank_table,
+    get_cffex_rank_table,
+    futures_dce_position_rank,
+    futures_dce_position_rank_other,
+    futures_gfex_position_rank,
+)
+
+"""
+大宗商品期货仓单数据
+"""
+from akshare.futures.receipt import get_receipt
+
+"""
+大宗商品期货展期收益率数据
+"""
+from akshare.futures.futures_roll_yield import (
+    get_roll_yield_bar,
+    get_roll_yield,
+)
+
+"""
+交易所日线行情数据
+"""
+from akshare.futures.futures_daily_bar import (
+    get_cffex_daily,
+    get_czce_daily,
+    get_shfe_daily,
+    get_dce_daily,
+    get_futures_daily,
+    get_ine_daily,
+    get_gfex_daily,
+)
+
+"""
+雪球基金数据
+"""
+from akshare.fund.fund_xq import (
+    fund_individual_basic_info_xq,
+    fund_individual_achievement_xq,
+    fund_individual_analysis_xq,
+    fund_individual_profit_probability_xq,
+    fund_individual_detail_info_xq,
+    fund_individual_detail_hold_xq,
+)
