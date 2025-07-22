@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QAction, QTextEdit,
     QVBoxLayout, QWidget, QSplitter, QComboBox,
     QListWidget, QListWidgetItem, QHBoxLayout,
-    QLabel, QLineEdit,QPushButton, QLayout, QMessageBox, QFileDialog
+    QLabel, QLineEdit,QPushButton, QLayout, QMessageBox, QFileDialog, QMenu
 )
 
 # QtCore 导入
@@ -77,10 +77,53 @@ class MainWindow(QMainWindow):
         self.createMenuBar()
     
     class MethodListWidget(QListWidget):
-        """自定义列表控件，处理键盘导航"""
+        """自定义列表控件，处理键盘导航和右键评分"""
         def __init__(self, parent=None):
             super().__init__(parent)
             self.parent_window = parent
+            self.setContextMenuPolicy(Qt.CustomContextMenu)
+            self.customContextMenuRequested.connect(self.show_context_menu)
+            
+        def show_context_menu(self, pos):
+            """显示右键评分菜单"""
+            item = self.itemAt(pos)
+            if not item:
+                return
+                
+            menu = QMenu(self)
+            ratings = ["无", "1", "2", "3", "4", "5"]
+            actions = []
+            
+            # 添加评分选项
+            for rating in ratings:
+                action = menu.addAction(rating)
+                action.triggered.connect(lambda _, r=rating, i=item: self.set_rating(r, i))
+                
+            menu.exec_(self.mapToGlobal(pos))
+            
+        def set_rating(self, rating, item):
+            """设置方法评分并更新显示"""
+            method_name = item.text().split(' (')[0]  # 获取原始方法名
+            df = self.parent_window.methods_data
+            
+            # 更新DataFrame中的评分
+            mask = df['方法'] == method_name
+            if rating == "无":
+                df.loc[mask, '方法评分'] = None
+            else:
+                df.loc[mask, '方法评分'] = int(rating)
+            
+            # 更新显示
+            new_text = method_name
+            if rating != "无":
+                new_text += f" ({rating})"
+            item.setText(new_text)
+            
+            # 保存到Excel
+            try:
+                df.to_excel('config/akshare_method_doc.xlsx', index=False)
+            except Exception as e:
+                QMessageBox.critical(self.parent_window, "错误", f"保存评分失败: {str(e)}")
         
         def keyPressEvent(self, event: QKeyEvent) -> None:
             """处理键盘事件"""
@@ -216,8 +259,10 @@ class MainWindow(QMainWindow):
             self.method_list.itemEntered.connect(self.show_tooltip)
             self.method_items = []
             for _, row in self.methods_data.iterrows():
-                item = row['方法']
-                self.method_list.addItem(item)
+                item_text = row['方法']
+                if '方法评分' in row and pd.notna(row['方法评分']):
+                    item_text += f" ({row['方法评分']})"
+                self.method_list.addItem(item_text)
                 self.method_items.append(row)
             
             # 连接信号槽
@@ -257,8 +302,10 @@ class MainWindow(QMainWindow):
             ]
             
         for _, row in filtered_data.iterrows():
-            item = row['方法']
-            self.method_list.addItem(item)
+            item_text = row['方法']
+            if '方法评分' in row and pd.notna(row['方法评分']):
+                item_text += f" ({row['方法评分']})"
+            self.method_list.addItem(item_text)
             self.method_items.append(row)
     
     def __init__(self):
@@ -298,8 +345,9 @@ class MainWindow(QMainWindow):
         if not middle_layout.indexOf(self.param_container) >= 0:
             middle_layout.insertLayout(0, self.param_container)
         
-        # 获取方法信息
-        method_name = list_item.text()
+        # 获取方法信息（处理带评分的情况）
+        full_text = list_item.text()
+        method_name = full_text.split(' (')[0]  # 去掉评分部分
         method_data = next((row for row in self.method_items if row['方法'] == method_name), None)
         if method_data is None or method_data.empty:
             return
@@ -334,7 +382,8 @@ class MainWindow(QMainWindow):
     def show_tooltip(self, item):
         """显示工具提示"""
         if item:
-            method_name = item.text()
+            full_text = item.text()
+            method_name = full_text.split(' (')[0]  # 去掉评分部分
             for row in self.method_items:
                 if row['方法'] == method_name:
                     rect = self.method_list.visualItemRect(item)
@@ -570,7 +619,7 @@ class MainWindow(QMainWindow):
 
     def show_about(self):
         """显示关于对话框"""
-        QMessageBox.about(self, "关于", "AKShare数据加载器 v2.0")
+        QMessageBox.about(self, "关于", "AKShare数据加载器 v2.1\n新增功能：\n- 右键评分功能\n- 自动保存评分到配置文件")
 
     def execute_akshare_request(self):
         """执行AKShare请求并显示结果"""
@@ -578,8 +627,9 @@ class MainWindow(QMainWindow):
         if not current_item:
             return
             
-        # 获取当前方法名
-        self.current_method_name = current_item.text()
+        # 获取当前方法名（去掉评分部分）
+        full_text = current_item.text()
+        self.current_method_name = full_text.split(' (')[0]
         
         # 收集参数值
         params = {}
@@ -618,7 +668,9 @@ class MainWindow(QMainWindow):
             return
             
         # 设置默认文件名
-        default_name = f"{self.current_method_name}.csv"
+        # 确保文件名不包含评分
+        method_name = self.current_method_name.split(' (')[0]
+        default_name = f"{method_name}.csv"
         
         # 弹出文件保存对话框
         file_path, _ = QFileDialog.getSaveFileName(

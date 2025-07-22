@@ -71,6 +71,13 @@ class ToolTipWindow(QLabel):
 class MethodListWidget(QListWidget):
     def keyPressEvent(self, event: QKeyEvent) -> None:
         # 处理键盘导航事件
+    
+    def show_context_menu(self, pos):
+        # 显示右键评分菜单（选项：无/1/2/3/4/5）
+    
+    def set_rating(self, rating, item):
+        # 设置方法评分并更新显示
+        # 自动保存到config/akshare_method_doc.xlsx
 ```
 
 ## 4. 数据处理流程
@@ -96,6 +103,7 @@ graph TD
 | 解释 | 方法功能说明 |
 | 参数 | 参数列表（分号分隔） |
 | 注释 | 额外说明（显示为tooltip） |
+| 方法评分 | 用户评分（1-5） |
 
 ### 5.2 `operation_menu.xlsx`
 | 列名 | 说明 |
